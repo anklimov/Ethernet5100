@@ -58,13 +58,21 @@ int EthernetClient::connect(IPAddress ip, uint16_t port) {
     _sock = MAX_SOCK_NUM;
     return 0;
   }
-
+ 
+  unsigned long ti=millis()+4500UL; ///
   while (status() != SnSR::ESTABLISHED) {
     delay(1);
     if (status() == SnSR::CLOSED) {
       _sock = MAX_SOCK_NUM;
       return 0;
     }
+    if (millis()>ti) {
+       close(_sock);
+        EthernetClass::_server_port[_sock] = 0;
+      _sock = MAX_SOCK_NUM;
+      Serial.println(F("Conn. aborted"));
+      return 0;
+     }
   }
 
   return 1;
