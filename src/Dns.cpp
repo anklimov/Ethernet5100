@@ -40,8 +40,6 @@
 #define LABEL_COMPRESSION_MASK   (0xC0)
 // Port number that DNS servers listen on
 #define DNS_PORT        53
-
-// Possible return codes from ProcessResponse
 #define SUCCESS          1
 #define TIMED_OUT        -1
 #define INVALID_SERVER   -2
@@ -138,7 +136,7 @@ int DNSClient::getHostByName(const char* aHostname, IPAddress& aResult)
                         ret = TIMED_OUT;
                         while ((wait_retries < 3) && (ret == TIMED_OUT))
                         {
-                            ret = ProcessResponse(5000, aResult);
+                            ret = ProcessResponse(4000, aResult);
                             wait_retries++;
                         }
                     }
@@ -403,4 +401,3 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     // If we get here then we haven't found an answer
     return -10;//INVALID_RESPONSE;
 }
-
