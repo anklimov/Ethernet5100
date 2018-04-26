@@ -9,6 +9,10 @@
 #include "Dhcp.h"
 
 #define MAX_SOCK_NUM 4
+#define _OPEN_TIMEOUT 4500L
+#define _DNS_WAIT_RESP_TIMEOUT 4000L
+#define _DNS_RETRIES 3
+void ethernetIdle(void);
 
 class EthernetClass {
 private:

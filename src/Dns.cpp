@@ -4,6 +4,7 @@
 
 #include "utility/w5100.h"
 #include "EthernetUdp.h"
+#include "Ethernet.h"
 #include "utility/util.h"
 
 #include "Dns.h"
@@ -134,10 +135,11 @@ int DNSClient::getHostByName(const char* aHostname, IPAddress& aResult)
                         // Now wait for a response
                         int wait_retries = 0;
                         ret = TIMED_OUT;
-                        while ((wait_retries < 3) && (ret == TIMED_OUT))
+                        while ((wait_retries < _DNS_RETRIES) && (ret == TIMED_OUT))
                         {
-                            ret = ProcessResponse(4000, aResult);
+                            ret = ProcessResponse(_DNS_WAIT_RESP_TIMEOUT, aResult);
                             wait_retries++;
+                            ethernetIdle();
                         }
                     }
                 }
@@ -242,7 +244,8 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     {
         if((millis() - startTime) > aTimeout)
             return TIMED_OUT;
-        delay(50);
+        ethernetIdle();    
+        delay(1);
     }
 
     // We've had a reply!

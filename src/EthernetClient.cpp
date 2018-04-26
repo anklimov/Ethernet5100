@@ -59,9 +59,10 @@ int EthernetClient::connect(IPAddress ip, uint16_t port) {
     return 0;
   }
  
-  unsigned long ti=millis()+4500UL; ///
+  unsigned long ti=millis()+_OPEN_TIMEOUT;//4500UL; ///
   while (status() != SnSR::ESTABLISHED) {
     delay(1);
+    ethernetIdle();
     if (status() == SnSR::CLOSED) {
       _sock = MAX_SOCK_NUM;
       return 0;
@@ -74,7 +75,7 @@ int EthernetClient::connect(IPAddress ip, uint16_t port) {
       return 0;
      }
   }
-
+  Serial.println(F("Connected."));
   return 1;
 }
 
@@ -146,6 +147,7 @@ void EthernetClient::stop() {
     if (s == SnSR::CLOSED)
       break; // exit the loop
     delay(1);
+    ethernetIdle();
   } while (millis() - start < 1000);
 
   // if it hasn't closed, close it forcefully

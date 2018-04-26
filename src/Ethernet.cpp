@@ -134,3 +134,6 @@ IPAddress EthernetClass::dnsServerIP()
 }
 
 EthernetClass Ethernet;
+
+void ethernetIdle(void) __attribute__ ((weak));
+void ethernetIdle(void) {};
