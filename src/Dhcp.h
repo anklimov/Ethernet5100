@@ -52,6 +52,7 @@
 #define DHCP_CHECK_RENEW_OK     (2)
 #define DHCP_CHECK_REBIND_FAIL  (3)
 #define DHCP_CHECK_REBIND_OK    (4)
+#define NO_LINK	(5)
 
 enum
 {
