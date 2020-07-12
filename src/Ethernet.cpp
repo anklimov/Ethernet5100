@@ -137,3 +137,8 @@ EthernetClass Ethernet;
 
 void ethernetIdle(void) __attribute__ ((weak));
 void ethernetIdle(void) {};
+
+EthernetLinkStatus EthernetClass::linkStatus()
+{
+		return Unknown;
+}

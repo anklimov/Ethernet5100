@@ -12,6 +12,32 @@
 #define _OPEN_TIMEOUT 4500L
 #define _DNS_WAIT_RESP_TIMEOUT 4000L
 #define _DNS_RETRIES 3
+
+
+
+
+
+
+
+
+
+
+enum EthernetLinkStatus {
+	Unknown,
+	LinkON,
+	LinkOFF
+};
+
+
+
+
+
+
+
+
+
+
+
 void ethernetIdle(void);
 
 class EthernetClass {
@@ -30,6 +56,7 @@ public:
   void begin(uint8_t *mac_address, IPAddress local_ip, IPAddress dns_server, IPAddress gateway);
   void begin(uint8_t *mac_address, IPAddress local_ip, IPAddress dns_server, IPAddress gateway, IPAddress subnet);
   int maintain();
+  static EthernetLinkStatus linkStatus();
 
   IPAddress localIP();
   IPAddress subnetMask();
